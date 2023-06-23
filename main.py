@@ -58,12 +58,14 @@ while current_date <= end_date:
         # 커밋 날짜 변경
         formatted_date = f"{current_date}T{10+file_index%12}:00:00"  # 랜덤 시간은 더 복잡하게 설정할 수 있음
 
-        #잔디도 심기
         os.environ["GIT_COMMITTER_DATE"] = formatted_date
         os.environ["GIT_AUTHOR_DATE"] = formatted_date
-        
+
 
         subprocess.run(["git", "commit", "--amend", "--no-edit", "--date", formatted_date])
+
+        #잔디도 심기
+        subprocess.run(["git", "push", "-u", "origin", "main", "-f"])
 
         
         # 파일 인덱스와 스니펫 인덱스 업데이트
