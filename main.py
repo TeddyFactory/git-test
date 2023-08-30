@@ -5,6 +5,9 @@ from datetime import date, timedelta
 # 새로운 Git 저장소 초기화
 subprocess.run(["git", "init"])
 # git remote add origin git@github-floatfactory:TeddyFactory/git-test.git
+
+subprocess.run(["git", "remote", "add", "origin", "git@github-floatfactory:TeddyFactory/git-test.git"])
+
 # 시작 날짜와 종료 날짜 설정
 start_date = date(2023, 6, 1)
 end_date = date(2023, 8, 31)
@@ -45,16 +48,11 @@ while current_date <= end_date:
         subprocess.run(["git", "commit", "-m", f"Adding python_code_{file_index}.py"])
 
         # 커밋 날짜 변경
-        formatted_date = f"{current_date}T{10+file_index%12}:00:00"
+        formatted_date = f"{current_date}T{10+file_index%12}:00:00"  # 랜덤 시간은 더 복잡하게 설정할 수 있음
 
-        # GIT_COMMITTER_DATE 설정
         os.environ["GIT_COMMITTER_DATE"] = formatted_date
 
-        # 날짜를 변경하여 커밋 다시 생성
         subprocess.run(["git", "commit", "--amend", "--no-edit", "--date", formatted_date])
-
-        # rebase를 사용하여 커밋 시간을 재조정
-        subprocess.run(["git", "rebase", "--ignore-date", "HEAD~1"])
 
         # 파일 인덱스와 스니펫 인덱스 업데이트
         file_index += 1
@@ -62,5 +60,6 @@ while current_date <= end_date:
 
     # 다음 날짜로 이동
     current_date += timedelta(days=1)
+
 # Git에 푸시
 subprocess.run(["git", "push", "-u", "origin", "main", "-f"])
