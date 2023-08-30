@@ -8,6 +8,14 @@ subprocess.run(["git", "init"])
 
 subprocess.run(["git", "remote", "add", "origin", "git@github-floatfactory:TeddyFactory/git-test.git"])
 
+# 깃 사용자 정보 임시저장
+prev_git_user_name = os.environ.get("GIT_AUTHOR_NAME")
+prev_git_user_email = os.environ.get("GIT_AUTHOR_EMAIL")
+
+# 깃 사용자 정보 변경
+os.environ["GIT_AUTHOR_NAME"] = "TeddyFactory"
+os.environ["GIT_AUTHOR_EMAIL"] = "teddy@floatfactory.kr"
+
 # 시작 날짜와 종료 날짜 설정
 start_date = date(2023, 6, 1)
 end_date = date(2023, 8, 31)
@@ -63,3 +71,7 @@ while current_date <= end_date:
 
 # Git에 푸시
 subprocess.run(["git", "push", "-u", "origin", "main", "-f"])
+
+# 깃 사용자 정보 복구
+os.environ["GIT_AUTHOR_NAME"] = prev_git_user_name
+os.environ["GIT_AUTHOR_EMAIL"] = prev_git_user_email
