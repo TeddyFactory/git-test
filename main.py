@@ -62,6 +62,8 @@ while current_date <= end_date:
 
         subprocess.run(["git", "commit", "--amend", "--no-edit", "--date", formatted_date])
 
+        subprocess.run(["git", "rebase", "--ignore-date", "HEAD~1"])
+
         # 파일 인덱스와 스니펫 인덱스 업데이트
         file_index += 1
         snippet_index = (snippet_index + 1) % len(python_snippets)
